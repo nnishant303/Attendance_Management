@@ -144,8 +144,7 @@ const authSlice = createSlice({
       })
       .addCase(signUpWithEmail.fulfilled, (state, action) => {
         state.loading = false;
-        // Don't set user or isAuthenticated since we're not logging in automatically
-        // Explicitly clear any existing user state to prevent automatic navigation
+       
         state.user = null;
         state.isAuthenticated = false;
         state.error = null;

@@ -19,7 +19,7 @@ const CalendarUI = ({
   handleToday,
   handleOpenCalendarModal,
   attendanceStatuses,
-  isNextWeekDisabled,  // <-- ADD THIS
+  isNextWeekDisabled,  
 }) => {
 
   const navigate = useNavigate();
@@ -29,10 +29,10 @@ const CalendarUI = ({
   };
   const gridColsClass = "grid grid-cols-[300px_repeat(5,minmax(0,1fr))]";
   
-  // Skeleton loader component for student rows
+  
   const StudentRowSkeleton = () => (
     <div className={`${gridColsClass} hover:bg-red-50/20 py-4`}>
-      {/* Student profile skeleton */}
+   
       <div className="flex items-center p-4 border-r border-gray-200">
         <div className="rounded-full bg-gray-200 animate-pulse w-10 h-10 mr-3"></div>
         <div className="flex-1">
@@ -41,7 +41,7 @@ const CalendarUI = ({
         </div>
       </div>
       
-      {/* Attendance cell skeletons */}
+    
       {[...Array(5)].map((_, index) => (
         <div key={index} className="p-4 border-r border-gray-200 last:border-r-0 flex items-center justify-center">
           <div className="h-6 w-16 bg-gray-200 rounded animate-pulse"></div>
@@ -50,7 +50,7 @@ const CalendarUI = ({
     </div>
   );
 
-  // Add a safety check for required props
+
   if (!attendanceStatuses || !daysOfWeek || !formattedStudents) {
     console.warn("CalendarUI: Missing required props", { attendanceStatuses, daysOfWeek, formattedStudents });
     return (
@@ -100,7 +100,7 @@ const CalendarUI = ({
 
             <button
               onClick={handleNextWeek}
-              disabled={isNextWeekDisabled} // <-- new prop
+              disabled={isNextWeekDisabled} 
               className={`p-2 rounded-md transition-colors ${
                 isNextWeekDisabled
                   ? "cursor-not-allowed text-gray-300"
@@ -162,7 +162,7 @@ const CalendarUI = ({
         </div>
 
         <div className="divide-y divide-gray-100 flex-grow overflow-y-auto">
-          {/* Show skeleton loaders when data is loading or when there are no students */}
+        
           {(!formattedStudents || formattedStudents.length === 0) ? (
             [...Array(8)].map((_, index) => (
               <StudentRowSkeleton key={index} />
@@ -178,11 +178,11 @@ const CalendarUI = ({
                 />
 
                 {daysOfWeek.map((day) => {
-                  // Ensure we have a valid attendance status
-                  let statusKey = "absent"; // Default to absent
+                 
+                  let statusKey = "absent"; 
                   
                   try {
-                    // Safely access attendance data
+                  
                     if (attendance && typeof attendance === 'object') {
                       const studentAttendance = attendance[student.id];
                       if (studentAttendance && typeof studentAttendance === 'object') {
@@ -193,7 +193,7 @@ const CalendarUI = ({
                     }
                   } catch (error) {
                     console.warn("Error accessing attendance data:", error);
-                    statusKey = "absent"; // Fallback to absent on error
+                    statusKey = "absent"; 
                   }
                   
                   const isHoliday = day.special === "Holiday";
@@ -207,7 +207,7 @@ const CalendarUI = ({
 
                   return (
                     <AttendanceCellUI
-                      key={`${student.id}-${day.fullDate}`} // More unique key
+                      key={`${student.id}-${day.fullDate}`} 
                       studentId={student.id}
                       date={day.fullDate}
                       statusKey={statusKey}

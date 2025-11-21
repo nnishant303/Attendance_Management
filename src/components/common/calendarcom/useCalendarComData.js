@@ -30,7 +30,7 @@ export const useCalendarData = () => {
   useEffect(() => {
     let unsubscribeEvents;
     let unsubscribeEmployees;
-    
+
     // Set up event listener
     dispatch(listenToEvents()).then((unsubscribe) => {
       if (typeof unsubscribe === 'function') {
@@ -39,7 +39,7 @@ export const useCalendarData = () => {
     }).catch((error) => {
       console.error("Failed to set up events listener:", error);
     });
-    
+
     // Set up employee listener
     dispatch(listenToEmployees()).then((unsubscribe) => {
       if (typeof unsubscribe === 'function') {
@@ -48,7 +48,7 @@ export const useCalendarData = () => {
     }).catch((error) => {
       console.error("Failed to set up employees listener:", error);
     });
-    
+
     // Cleanup function to unsubscribe when component unmounts
     return () => {
       if (typeof unsubscribeEvents === 'function') unsubscribeEvents();
@@ -93,8 +93,8 @@ export const useCalendarData = () => {
         ? typeof emp.DateOfBirth === "string"
           ? new Date(emp.DateOfBirth)
           : emp.DateOfBirth.toDate
-          ? emp.DateOfBirth.toDate()
-          : emp.DateOfBirth
+            ? emp.DateOfBirth.toDate()
+            : emp.DateOfBirth
         : null,
     }));
   }, [employees]);
@@ -161,21 +161,11 @@ export const useCalendarData = () => {
   };
 
   const handleNextMonth = () => {
-    // Check if next month would be in the future
-    const today = new Date();
-    const nextMonth = currentMonth === 11 ? 0 : currentMonth + 1;
-    const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear;
-    const nextMonthDate = new Date(nextYear, nextMonth);
-    const currentDate = new Date(today.getFullYear(), today.getMonth());
-    
-    // Only allow navigation if next month is not in the future
-    if (nextMonthDate <= currentDate) {
-      if (currentMonth === 11) {
-        setCurrentMonth(0);
-        setCurrentYear((y) => y + 1);
-      } else {
-        setCurrentMonth((m) => m + 1);
-      }
+    if (currentMonth === 11) {
+      setCurrentMonth(0);
+      setCurrentYear((y) => y + 1);
+    } else {
+      setCurrentMonth((m) => m + 1);
     }
   };
 
@@ -237,7 +227,7 @@ export const useCalendarData = () => {
     monthNames,
     parsedEvents,
     parsedEmployees,
-    
+
     // Functions
     setCurrentMonth,
     setCurrentYear,
