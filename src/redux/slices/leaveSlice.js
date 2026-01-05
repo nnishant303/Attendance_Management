@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { io } from "socket.io-client";
 import api from "../../utils/api";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://attendmate-backend.onrender.com/api";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://attendmate-backend-femy.onrender.com/api";
 let socket;
 
 export const fetchLeaveRequests = createAsyncThunk(

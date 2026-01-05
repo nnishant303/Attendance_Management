@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://attendmate-backend.onrender.com/api";
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://attendmate-backend-femy.onrender.com/api";
 
 // Create an axios instance
 const api = axios.create({
