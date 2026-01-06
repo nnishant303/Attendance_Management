@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { subscribeToLeaveRequests } from "../../../redux/slices/leaveSlice";
+import { fetchLeaveRequests, subscribeToLeaveRequests } from "../../../redux/slices/leaveSlice";
 
 /**
  * Custom hook for managing leave requests with real-time updates
@@ -23,6 +23,7 @@ export const useLeaveRequests = () => {
     // Cleanup function - removes listener when component unmounts
     return () => {
       if (unsubscribe) unsubscribe();
+      dispatch(fetchLeaveRequests()); // Refresh data on unmount
     };
   }, [dispatch]); // Only dispatch in dependency array - listener runs once
 
@@ -30,33 +31,35 @@ export const useLeaveRequests = () => {
   // This computation happens on EVERY render, but that's OK because:
   // 1. It's fast (just array mapping)
   // 2. It ensures UI always shows latest data from Redux
-  const requests = leaves.map((leave) => {
-    // Find employee by EmployeeID (string match)
-    const employee = employees.find(
-      (emp) =>
-        String(emp.EmployeeID) === String(leave.EmployeeID) ||
-        String(emp.id) === String(leave.EmployeeID)
-    );
+  const requests = leaves.flatMap((leave) => {
+    // Loop through employees inside each leave request
+    return leave.employees.map((leaveEmployee) => {
+      // Find employee by EmployeeID (string match)
+      const employee = employees.find(
+        (emp) =>
+          String(emp.EmployeeID) === String(leaveEmployee.employeeId) ||
+          String(emp.id) === String(leaveEmployee.employeeId)
+      );
+      
+      return {
+        id: leave.requestId, // The date string or doc ID
+        employeeId: leaveEmployee.employeeId,
 
-    return {
-      id: leave.requestId, // The date string or doc ID
-      employeeId: leave.EmployeeID,
+        // Employee Details
+        name: employee?.name || "Unknown Employee",
+        photo: employee?.Photo || null,
+        // Leave Details
+        leaveType: leaveEmployee.leaveType,
+        startDate: leaveEmployee.fromDate,
+        endDate: leaveEmployee.toDate,
+        status: leave.status || "Pending",
+        reason: leaveEmployee.reason,
+        totalDays: leaveEmployee.totalDays,
 
-      // Employee Details
-      name: employee?.Name || employee?.name || "Unknown Employee",
-      photo: employee?.Photo || employee?.photo || null,
-
-      // Leave Details
-      leaveType: leave.leaveType,
-      startDate: leave.startDate,
-      endDate: leave.endDate,
-      status: leave.status || "Pending",
-      reason: leave.reason,
-      totalDays: leave.totalDays,
-
-      // Raw data if needed
-      ...leave
-    };
+        // Raw data if needed
+        ...leave
+      };
+    }) || [];
   });
 
   return { requests, loading: leavesLoading };
