@@ -52,12 +52,10 @@ export const useLeaveRequests = () => {
         leaveType: leaveEmployee.leaveType,
         startDate: leaveEmployee.fromDate,
         endDate: leaveEmployee.toDate,
-        status: leave.status || "Pending",
+        status: leaveEmployee.status || "Pending",
         reason: leaveEmployee.reason,
         totalDays: leaveEmployee.totalDays,
 
-        // Raw data if needed
-        ...leave
       };
     }) || [];
   });
