@@ -208,7 +208,7 @@ const LeaveRequestUI = ({ requests, loading }) => {
                     <button
                       className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition"
                       onClick={() =>
-                        navigate(`/leave-request/${encodeURIComponent(req.path)}`)
+                        navigate(`/leave-request/${encodeURIComponent(req.appliedOn)}/${encodeURIComponent(req.employeeId)}`)
                       }
                     >
                       <Eye size={18} className="text-gray-700" />

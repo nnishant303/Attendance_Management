@@ -165,7 +165,7 @@ const AppRouter = () => {
           />
 
           <Route
-            path="/leave-request/:id"
+            path="/leave-request/:date/:employeeId"
             element={
               <ProtectedRoute>
                 <ViewLeaveRequestPage />
