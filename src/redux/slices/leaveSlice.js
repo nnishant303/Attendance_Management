@@ -46,18 +46,15 @@ export const subscribeToLeaveRequests = () => (dispatch) => {
 };
 
 export const updateLeaveStatus = createAsyncThunk(
-    "leaves/updateLeaveStatus",
-    async ({ id, status }, { rejectWithValue }) => {
-        try {
-            const response = await api.put(`/leaves/${id}`, { status });
-            const updated = response.data;
-            return { id, status: updated.leave.status };
-
-        } catch (error) {
-            console.error("Error updating leave status:", error);
-            return rejectWithValue(error.message);
-        }
+  "leaves/updateLeaveStatus",
+  async ({ date, employeeId, status }, { rejectWithValue }) => {
+    try {
+      const response = await api.put(`/leaves/${date}/${employeeId}`, { status });
+      return response.data.leave;
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
+  }
 );
 
 

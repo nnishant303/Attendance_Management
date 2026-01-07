@@ -40,9 +40,9 @@ export const useLeaveRequests = () => {
           String(emp.EmployeeID) === String(leaveEmployee.employeeId) ||
           String(emp.id) === String(leaveEmployee.employeeId)
       );
-      
+
       return {
-        id: leave.requestId, // The date string or doc ID
+        id: `${leaveEmployee.fromDate}-${leaveEmployee.employeeId}`,
         employeeId: leaveEmployee.employeeId,
 
         // Employee Details
@@ -54,8 +54,8 @@ export const useLeaveRequests = () => {
         endDate: leaveEmployee.toDate,
         status: leaveEmployee.status || "Pending",
         reason: leaveEmployee.reason,
-        totalDays: leaveEmployee.totalDays,
 
+        appliedOn: leaveEmployee.fromDate,
       };
     }) || [];
   });
