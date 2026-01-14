@@ -24,6 +24,7 @@ import EditEmployeePage from "../pages/EditEmployeePage";
 import EmployeeCalendarComPage from "../pages/EmployeeCalendarComPage";
 import LeaveRequestPage from "../pages/LeaveRequestPage";
 import ViewLeaveRequestPage from "../pages/ViewLeaveRequestPage";
+import NotificationPage from "../pages/Notifications/NotificationPage";
 
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
@@ -169,6 +170,15 @@ const AppRouter = () => {
             element={
               <ProtectedRoute>
                 <ViewLeaveRequestPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <NotificationPage />
               </ProtectedRoute>
             }
           />
