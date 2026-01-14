@@ -32,6 +32,9 @@ export const useLeaveRequests = () => {
   // 1. It's fast (just array mapping)
   // 2. It ensures UI always shows latest data from Redux
   const requests = leaves.flatMap((leave) => {
+    // Check if employees array exists
+    if (!leave?.employees) return [];
+
     // Loop through employees inside each leave request
     return leave.employees.map((leaveEmployee) => {
       // Find employee by EmployeeID (string match)
